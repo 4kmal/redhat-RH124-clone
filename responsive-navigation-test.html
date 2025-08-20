@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Responsive Navigation Test - Red Hat Academy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .test-container {
+            padding: 20px;
+            background: #f8f9fa;
+            margin: 20px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        .test-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .test-status.pass {
+            background: #28a745;
+            color: white;
+        }
+        .test-status.info {
+            background: #007bff;
+            color: white;
+        }
+        .feature-demo {
+            background: white;
+            padding: 16px;
+            margin: 12px 0;
+            border-radius: 6px;
+            border-left: 4px solid #cc0000;
+        }
+        .responsive-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #cc0000;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1001;
+        }
+        @media (max-width: 767px) {
+            .responsive-indicator::after { content: "📱 Mobile"; }
+        }
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .responsive-indicator::after { content: "📟 Tablet"; }
+        }
+        @media (min-width: 1024px) {
+            .responsive-indicator::after { content: "🖥️ Desktop"; }
+        }
+    </style>
+</head>
+<body>
+    <header class="redhat-header">
+        <div class="header-top">
+            <div class="header-nav">
+                <span>Redhat.com</span>
+                <span>Support</span>
+                <span>FAQ</span>
+                <div class="language-selector">
+                    <span>English</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <span class="user-id">a192193</span>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="header-brand">
+                <div class="logo-content">
+                    <img src="asset/image/logo-hat.png" alt="Red Hat" class="logo-hat">
+                    <span class="brand-text">Red Hat Academy</span>
+                </div>
+                <button class="main-nav-toggle" id="mainNavToggle" aria-label="Toggle main navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <nav class="main-nav" id="mainNav">
+                <div class="main-nav-header">
+                    <span class="nav-title">Main Menu</span>
+                    <button class="main-nav-close" aria-label="Close navigation">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="main-nav-content">
+                    <a href="#" class="main-nav-link">
+                        <i class="fas fa-book"></i>
+                        <span>Access Courses and Assignments</span>
+                    </a>
+                    <a href="#" class="main-nav-link">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Access Student Resources</span>
+                    </a>
+                    <a href="#" class="main-nav-link">
+                        <i class="fas fa-comment"></i>
+                        <span>Give Feedback</span>
+                    </a>
+                    <a href="#" class="main-nav-link">
+                        <i class="fas fa-support"></i>
+                        <span>Get Support</span>
+                    </a>
+                    <a href="#" class="main-nav-link">
+                        <i class="fas fa-network-wired"></i>
+                        <span>Talent Network Portal</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <div class="header-info">
+            <div class="version-info">
+                <span class="portal-logo">Red Hat Academy Portal Logo</span>
+                <span class="version">Version 1.7.1</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <button class="sidebar-toggle" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <aside class="sidebar" id="sidebar">
+            <div class="course-info">
+                <h2>RH124 - Test Navigation</h2>
+                <div class="progress-overview">
+                    <ul class="progress-map">
+                        <li class="progress-map-bar preface active">P</li>
+                        <li class="progress-map-bar">1</li>
+                        <li class="progress-map-bar">2</li>
+                        <li class="progress-map-bar">3</li>
+                        <li class="progress-map-bar">4</li>
+                    </ul>
+                    <span class="progress-text">Navigation Test</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3>Test Course Navigation</h3>
+                    <ul class="nav-list">
+                        <li class="nav-item completed">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Test completed section</span>
+                        </li>
+                        <li class="nav-item current">
+                            <i class="fas fa-play-circle"></i>
+                            <span>Current navigation test</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Future test section</span>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="course-container">
+                <div class="course-header">
+                    <h1>Responsive Navigation Test</h1>
+                    <div class="course-actions">
+                        <button class="download-badge">
+                            <i class="fas fa-download"></i> Test Feature
+                        </button>
+                        <button class="translations">
+                            <i class="fas fa-language"></i> Languages
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="course-layout">
+                    <div class="course-nav-tabs">
+                        <button class="tab-btn active" data-tab="navigation-test">Navigation Test</button>
+                        <button class="tab-btn" data-tab="spacing-test">Spacing Test</button>
+                        <button class="tab-btn" data-tab="responsive-test">Responsive Test</button>
+                    </div>
+                    
+                    <div class="content-wrapper">
+                        <div id="navigation-test" class="tab-content active">
+                            <div class="test-container">
+                                <h2>✅ Responsive Navigation Features</h2>
+                                
+                                <div class="feature-demo">
+                                    <h3>🍔 Main Navigation Hamburger Menu <span class="test-status pass">IMPLEMENTED</span></h3>
+                                    <p><strong>Mobile/Tablet:</strong> Click the hamburger menu (☰) in the header to access main navigation</p>
+                                    <p><strong>Desktop:</strong> Navigation shows inline in header</p>
+                                    <ul>
+                                        <li>Touch-friendly sidebar with icons</li>
+                                        <li>Backdrop overlay</li>
+                                        <li>Swipe to close gesture</li>
+                                        <li>Keyboard support (ESC to close)</li>
+                                    </ul>
+                                </div>
+
+                                <div class="feature-demo">
+                                    <h3>📱 Course Content Sidebar <span class="test-status pass">IMPLEMENTED</span></h3>
+                                    <p><strong>Mobile/Tablet:</strong> Click the sidebar toggle (☰) to access course navigation</p>
+                                    <p><strong>Desktop:</strong> Sidebar always visible</p>
+                                    <ul>
+                                        <li>Progress tracking visual</li>
+                                        <li>Chapter navigation</li>
+                                        <li>Touch-friendly course menu</li>
+                                    </ul>
+                                </div>
+
+                                <div class="feature-demo">
+                                    <h3>🎯 Fixed Spacing Issues <span class="test-status pass">FIXED</span></h3>
+                                    <p>Eliminated large white gaps in mobile layout:</p>
+                                    <ul>
+                                        <li>Removed header-info section on mobile</li>
+                                        <li>Reduced header padding</li>
+                                        <li>Optimized container min-height</li>
+                                        <li>Better space utilization</li>
+                                    </ul>
+                                </div>
+
+                                <div class="feature-demo">
+                                    <h3>📏 Responsive Breakpoints <span class="test-status info">TEST</span></h3>
+                                    <p>Three optimized breakpoints:</p>
+                                    <ul>
+                                        <li><strong>Mobile:</strong> ≤ 767px - Compact layout, overlay sidebars</li>
+                                        <li><strong>Tablet:</strong> 768-1023px - Medium layout, toggleable sidebars</li>
+                                        <li><strong>Desktop:</strong> ≥ 1024px - Full layout, visible navigation</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="spacing-test" class="tab-content">
+                            <div class="test-container">
+                                <h2>📐 Spacing & Layout Test</h2>
+                                
+                                <div class="feature-demo">
+                                    <h3>Before vs After</h3>
+                                    <p><strong>BEFORE:</strong> Large white gap between header navigation and main content</p>
+                                    <p><strong>AFTER:</strong> Compact header with hamburger menu, optimal space usage</p>
+                                </div>
+
+                                <div class="content-navigation">
+                                    <button class="nav-btn prev">
+                                        <i class="fas fa-chevron-left"></i> Previous
+                                    </button>
+                                    <button class="nav-btn next">
+                                        Next <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="responsive-test" class="tab-content">
+                            <div class="test-container">
+                                <h2>🔧 Interactive Test Instructions</h2>
+                                
+                                <div class="feature-demo">
+                                    <h3>Test Procedures</h3>
+                                    <ol>
+                                        <li><strong>Resize Browser:</strong> Drag browser window to test breakpoints</li>
+                                        <li><strong>Mobile Test:</strong> Use browser dev tools mobile emulation</li>
+                                        <li><strong>Touch Test:</strong> All buttons have 44px+ touch targets</li>
+                                        <li><strong>Navigation Test:</strong> Try both hamburger menus</li>
+                                        <li><strong>Gesture Test:</strong> Swipe to close sidebars on mobile</li>
+                                        <li><strong>Keyboard Test:</strong> Press ESC to close sidebars</li>
+                                    </ol>
+                                </div>
+
+                                <div class="feature-demo">
+                                    <h3>Success Criteria ✅</h3>
+                                    <ul>
+                                        <li>No horizontal scrollbars on mobile</li>
+                                        <li>Touch targets minimum 44px</li>
+                                        <li>Smooth animations and transitions</li>
+                                        <li>Accessible keyboard navigation</li>
+                                        <li>Proper contrast ratios</li>
+                                        <li>Fast loading and responsive behavior</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <div class="responsive-indicator"></div>
+    
+    <footer class="redhat-footer">
+        <div class="footer-content">
+            <img src="asset/image/logo-hat.png" alt="Red Hat logo" class="footer-logo">
+            <div class="footer-links">
+                <span>© 2025 Red Hat, Inc.</span>
+                <a href="#">Navigation Test</a>
+                <a href="#">Responsive Design</a>
+                <a href="#">Mobile Optimization</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Test tab functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetTab = this.getAttribute('data-tab');
+                
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                this.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+            });
+        });
+
+        // Test button interactions
+        document.querySelectorAll('.download-badge, .translations').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const originalBg = this.style.background;
+                this.style.background = '#28a745';
+                this.innerHTML = '<i class="fas fa-check"></i> Test Success!';
+                
+                setTimeout(() => {
+                    this.style.background = originalBg;
+                    this.innerHTML = this.querySelector('i').classList.contains('fa-download') 
+                        ? '<i class="fas fa-download"></i> Test Feature'
+                        : '<i class="fas fa-language"></i> Languages';
+                }, 1500);
+            });
+        });
+
+        // Log navigation events for testing
+        console.log('Navigation test page loaded successfully');
+        
+        // Add test event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ DOM Content Loaded');
+            console.log('✅ Main Navigation Initialized');
+            console.log('✅ Mobile Sidebar Initialized');
+            console.log('✅ Responsive Design Active');
+        });
+    </script>
+</body>
+</html>

@@ -21,9 +21,9 @@ const SECTION_A1_CONTENT = {
     // Video configuration
     video: {
         hasVideo: true,
-        videoPath: "asset/video/RH124 - pr01.ts",
+        videoPath: "asset/video/section-A-1/RH124 - pr01.ts",
         videoTitle: "Course Introduction",
-        videoPoster: "asset/image/video-poster.png",
+        videoPoster: "asset/image/logo-hat.png",
         videoType: "video/mp2t",
         autoplay: false,
         controls: true

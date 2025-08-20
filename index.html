@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Red Hat System Administration II 9.3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Red Hat System Administration I 9.3</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-course-content.css">
     <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -24,15 +28,43 @@
         </div>
         <div class="header-main">
             <div class="header-brand">
-                <img src="asset/image/logo-hat.png" alt="Red Hat" class="logo-hat">
-                <span class="brand-text">Red Hat Academy</span>
+                <div class="logo-content">
+                    <img src="asset/image/logo-hat.png" alt="Red Hat" class="logo-hat">
+                    <span class="brand-text">Red Hat Academy</span>
+                </div>
+                <button class="main-nav-toggle" id="mainNavToggle" aria-label="Toggle main navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
-            <nav class="main-nav">
-                <a href="#">Access Courses and Assignments</a>
-                <a href="#">Access Student Resources</a>
-                <a href="#">Give Feedback</a>
-                <a href="#">Get Support</a>
-                <a href="#">Talent Network Portal</a>
+            <nav class="main-nav" id="mainNav">
+                <div class="main-nav-header">
+                    <span class="nav-title">Main Menu</span>
+                    <button class="main-nav-close" aria-label="Close navigation">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="main-nav-content">
+                    <a href="#" class="main-nav-link">
+                        <i class="fas fa-book"></i>
+                        <span>Access Courses and Assignments</span>
+                    </a>
+                    <a href="#" class="main-nav-link">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Access Student Resources</span>
+                    </a>
+                    <a href="#" class="main-nav-link">
+                        <i class="fas fa-comment"></i>
+                        <span>Give Feedback</span>
+                    </a>
+                    <a href="#" class="main-nav-link">
+                        <i class="fas fa-support"></i>
+                        <span>Get Support</span>
+                    </a>
+                    <a href="#" class="main-nav-link">
+                        <i class="fas fa-network-wired"></i>
+                        <span>Talent Network Portal</span>
+                    </a>
+                </div>
             </nav>
         </div>
         <div class="header-info">
@@ -48,88 +80,12 @@
             <i class="fas fa-bars"></i>
         </button>
         <aside class="sidebar" id="sidebar">
-            <div class="course-info">
-                <h2>RH124 - System Administration I</h2>
-                <div class="progress-overview">
-                    <ul id="progress-map-container" class="progress-map"></ul>
-                    <span class="progress-text">15% Complete</span>
-                </div>
+            <div class="course-info" id="courseInfo">
+                <!-- Dynamic course info will be loaded here -->
             </div>
 
-            <nav class="sidebar-nav">
-                <div class="nav-section">
-                    <h3>Course Modules</h3>
-                    <ul class="nav-list">
-                        <li class="nav-item completed">
-                            <i class="fas fa-check-circle"></i>
-                            <span>Introduction to Red Hat Enterprise Linux</span>
-                        </li>
-                        <li class="nav-item current">
-                            <i class="fas fa-play-circle"></i>
-                            <span>Accessing the Command Line</span>
-                        </li>
-                        <li class="nav-item">
-                            <i class="far fa-circle"></i>
-                            <span>Managing Files from the Command Line</span>
-                        </li>
-                        <li class="nav-item">
-                            <i class="far fa-circle"></i>
-                            <span>Getting Help in Red Hat Enterprise Linux</span>
-                        </li>
-                        <li class="nav-item">
-                            <i class="far fa-circle"></i>
-                            <span>Creating, Viewing, and Editing Text Files</span>
-                        </li>
-                        <li class="nav-item">
-                            <i class="far fa-circle"></i>
-                            <span>Managing Local Users and Groups</span>
-                        </li>
-                        <li class="nav-item">
-                            <i class="far fa-circle"></i>
-                            <span>Controlling Access to Files</span>
-                        </li>
-                        <li class="nav-item">
-                            <i class="far fa-circle"></i>
-                            <span>Monitoring and Managing Processes</span>
-                        </li>
-                        <li class="nav-item">
-                            <i class="far fa-circle"></i>
-                            <span>Controlling Services and Daemons</span>
-                        </li>
-                        <li class="nav-item">
-                            <i class="far fa-circle"></i>
-                            <span>Configuring and Securing SSH</span>
-                        </li>
-                        <li class="nav-item">
-                            <i class="far fa-circle"></i>
-                            <span>Analyzing and Storing Logs</span>
-                        </li>
-                        <li class="nav-item">
-                            <i class="far fa-circle"></i>
-                            <span>Managing Networking</span>
-                        </li>
-                        <li class="nav-item">
-                            <i class="far fa-circle"></i>
-                            <span>Archiving and Transferring Files</span>
-                        </li>
-                        <li class="nav-item">
-                            <i class="far fa-circle"></i>
-                            <span>Installing and Updating Software</span>
-                        </li>
-                        <li class="nav-item">
-                            <i class="far fa-circle"></i>
-                            <span>Accessing Linux File Systems</span>
-                        </li>
-                        <li class="nav-item">
-                            <i class="far fa-circle"></i>
-                            <span>Analyzing Servers and Getting Support</span>
-                        </li>
-                        <li class="nav-item">
-                            <i class="far fa-circle"></i>
-                            <span>Comprehensive Review</span>
-                        </li>
-                    </ul>
-                </div>
+            <nav class="sidebar-nav" id="sidebarNav">
+                <!-- Dynamic navigation tree will be loaded here -->
             </nav>
         </aside>
 
@@ -345,8 +301,17 @@
     <script src="table-of-content/toc-data.js"></script>
     <script src="table-of-content/toc-renderer.js"></script>
     
+    <!-- Sidebar Tree Navigation -->
+    <script src="sidebar/sidebar-tree-renderer.js"></script>
+    
+    <!-- Chapter Content Files -->
+    <script src="chapter/intro/section-a-1.js"></script>
+    <script src="chapter/intro/section-a-2.js"></script>
+    <script src="chapter/intro/section-a-3.js"></script>
+    <script src="chapter/ch01/section-1-1.js"></script>
+    
     <!-- Chapter Content System -->
-    <script src="chapter/chapter-loader.js"></script>
+    <script src="chapter/chapter-loader-simple.js"></script>
     
     <!-- Main Application Scripts -->
     <script src="script.js"></script>

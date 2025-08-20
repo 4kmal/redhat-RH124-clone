@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Mobile Responsive Test - Red Hat Academy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Red Hat+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .responsive-test {
+            padding: 20px;
+            background: #f8f9fa;
+            margin: 20px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        .responsive-test h2 {
+            color: #cc0000;
+            margin-bottom: 16px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        .feature-icon {
+            color: #28a745;
+            width: 20px;
+            text-align: center;
+        }
+        .breakpoint-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #cc0000;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1001;
+        }
+        @media (max-width: 767px) {
+            .breakpoint-indicator::after { content: "Mobile (≤767px)"; }
+        }
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .breakpoint-indicator::after { content: "Tablet (768-1023px)"; }
+        }
+        @media (min-width: 1024px) {
+            .breakpoint-indicator::after { content: "Desktop (≥1024px)"; }
+        }
+    </style>
+</head>
+<body>
+    <header class="redhat-header">
+        <div class="header-top">
+            <div class="header-nav">
+                <span>Redhat.com</span>
+                <span>Support</span>
+                <span>FAQ</span>
+                <div class="language-selector">
+                    <span>English</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <span class="user-id">a192193</span>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="header-brand">
+                <img src="asset/image/logo-hat.png" alt="Red Hat" class="logo-hat">
+                <span class="brand-text">Red Hat Academy - Mobile Test</span>
+            </div>
+            <nav class="main-nav">
+                <a href="#">Test Mobile Nav</a>
+                <a href="#">Touch Targets</a>
+                <a href="#">Responsive Design</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <button class="sidebar-toggle" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <aside class="sidebar" id="sidebar">
+            <div class="course-info">
+                <h2>Mobile Test</h2>
+                <div class="progress-overview">
+                    <ul id="progress-map-container" class="progress-map">
+                        <li class="progress-map-bar preface active">P</li>
+                        <li class="progress-map-bar">1</li>
+                        <li class="progress-map-bar">2</li>
+                        <li class="progress-map-bar">3</li>
+                        <li class="progress-map-bar">4</li>
+                    </ul>
+                    <span class="progress-text">Test Progress</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3>Test Navigation</h3>
+                    <ul class="nav-list">
+                        <li class="nav-item completed">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Touch-friendly navigation item</span>
+                        </li>
+                        <li class="nav-item current">
+                            <i class="fas fa-play-circle"></i>
+                            <span>Currently viewing mobile test</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Large touch targets for mobile</span>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="course-container">
+                <div class="course-header">
+                    <h1>Mobile Responsive Test</h1>
+                    <div class="course-actions">
+                        <button class="download-badge">
+                            <i class="fas fa-mobile-alt"></i> Touch Test
+                        </button>
+                        <button class="translations">
+                            <i class="fas fa-tablet-alt"></i> Responsive
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="course-layout">
+                    <div class="course-nav-tabs">
+                        <button class="tab-btn active" data-tab="mobile-features">Mobile Features</button>
+                        <button class="tab-btn" data-tab="responsive-test">Responsive Test</button>
+                        <button class="tab-btn" data-tab="touch-targets">Touch Targets</button>
+                    </div>
+                    
+                    <div class="content-wrapper">
+                        <div id="mobile-features" class="tab-content active">
+                            <div class="responsive-test">
+                                <h2>✅ Mobile Features Implemented</h2>
+                                <ul class="feature-list">
+                                    <li>
+                                        <i class="fas fa-mobile-alt feature-icon"></i>
+                                        <span>Mobile-first responsive design with breakpoints at 768px and 1024px</span>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-bars feature-icon"></i>
+                                        <span>Touch-friendly sidebar with swipe gestures and backdrop</span>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-video feature-icon"></i>
+                                        <span>Responsive video player with proper aspect ratio</span>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-hand-pointer feature-icon"></i>
+                                        <span>Minimum 44px touch targets for all interactive elements</span>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-list feature-icon"></i>
+                                        <span>Optimized table of contents with enhanced mobile navigation</span>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-keyboard feature-icon"></i>
+                                        <span>Keyboard navigation support (ESC to close sidebar)</span>
+                                    </li>
+                                    <li>
+                                        <i class="fas fa-expand-arrows-alt feature-icon"></i>
+                                        <span>Flexible layouts that adapt to screen orientation</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="video-classroom-section">
+                                <div class="video-header">
+                                    <h2>RESPONSIVE VIDEO TEST</h2>
+                                    <button class="video-expand-btn">
+                                        <i class="fas fa-expand-arrows-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="video-container">
+                                    <div class="video-overlay">
+                                        <div class="video-info">
+                                            <img src="asset/image/logo-hat.png" alt="Red Hat" class="video-logo">
+                                            <div class="video-text">
+                                                <h3>Red Hat</h3>
+                                                <p>Mobile Video Test</p>
+                                            </div>
+                                        </div>
+                                        <div class="play-button-large">
+                                            <i class="fas fa-play"></i>
+                                        </div>
+                                        <h4 class="video-title">Responsive Video Player - Test on Different Screen Sizes</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="responsive-test" class="tab-content">
+                            <div class="responsive-test">
+                                <h2>📱 Responsive Behavior Test</h2>
+                                <p><strong>Instructions:</strong> Resize your browser window or rotate your device to test responsive behavior.</p>
+                                
+                                <h3>Breakpoints:</h3>
+                                <ul>
+                                    <li><strong>Mobile:</strong> ≤ 767px - Sidebar becomes overlay, tabs stack vertically</li>
+                                    <li><strong>Tablet:</strong> 768px - 1023px - Sidebar toggles, improved spacing</li>
+                                    <li><strong>Desktop:</strong> ≥ 1024px - Sidebar always visible, full layout</li>
+                                </ul>
+
+                                <div class="content-navigation">
+                                    <button class="nav-btn prev">
+                                        <i class="fas fa-chevron-left"></i> Previous Test
+                                    </button>
+                                    <button class="nav-btn next">
+                                        Next Test <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="touch-targets" class="tab-content">
+                            <div class="responsive-test">
+                                <h2>👆 Touch Target Test</h2>
+                                <p>All interactive elements meet accessibility guidelines with minimum 44px touch targets.</p>
+                                
+                                <div class="purchase-options">
+                                    <div class="purchase-card">
+                                        <h3>Touch Test A</h3>
+                                        <div class="price">$0</div>
+                                        <ul>
+                                            <li>Large touch targets</li>
+                                            <li>Proper spacing</li>
+                                            <li>Visual feedback</li>
+                                        </ul>
+                                        <button class="purchase-btn">Test Button A</button>
+                                    </div>
+                                    
+                                    <div class="purchase-card featured">
+                                        <h3>Touch Test B</h3>
+                                        <div class="price">$0</div>
+                                        <div class="popular">Featured</div>
+                                        <ul>
+                                            <li>Touch-friendly design</li>
+                                            <li>Mobile optimized</li>
+                                            <li>Accessible interactions</li>
+                                        </ul>
+                                        <button class="purchase-btn">Test Button B</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <div class="breakpoint-indicator"></div>
+    
+    <footer class="redhat-footer">
+        <div class="footer-content">
+            <img src="asset/image/logo-hat.png" alt="Red Hat logo" class="footer-logo">
+            <div class="footer-links">
+                <span>© 2025 Red Hat, Inc.</span>
+                <a href="#">Mobile Test</a>
+                <a href="#">Responsive Design</a>
+                <a href="#">Touch Targets</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Simple test script for tab functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetTab = this.getAttribute('data-tab');
+                
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                this.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+            });
+        });
+
+        // Test button feedback
+        document.querySelectorAll('.purchase-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const originalText = this.textContent;
+                this.textContent = 'Touched! ✓';
+                this.style.background = '#28a745';
+                
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.style.background = '';
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeVideoClassroom();
     initializeContentFeatures();
     initializeTabs();
+    initializeMobileSidebar();
+    initializeMainNavigation();
+    initializeURLRouting();
     // TOC is now initialized by toc-renderer.js
 });
 
@@ -327,15 +330,31 @@ function initializeTabs() {
 // initializeTOCLinks function removed - now handled by toc-renderer.js
 
 // Make loadSectionContent globally available for TOC renderer
-window.loadSectionContent = async function loadSectionContent(sectionId) {
+window.loadSectionContent = function loadSectionContent(sectionId) {
     try {
-        // Use the new modular chapter loader system
-        if (typeof window.loadAndRenderSection === 'function') {
-            await window.loadAndRenderSection(sectionId);
-            console.log(`Successfully loaded section: ${sectionId}`);
+        console.log('Loading section content for:', sectionId);
+        
+        // Switch to Course tab first
+        const courseTab = document.querySelector('[data-tab="course"]');
+        if (courseTab && !courseTab.classList.contains('active')) {
+            courseTab.click();
+        }
+        
+        // Update sidebar to reflect current section
+        if (typeof window.updateSidebarCurrentSection === 'function') {
+            window.updateSidebarCurrentSection(sectionId);
+        }
+        
+        // Use the simple chapter loader system (CSP compliant)
+        if (typeof window.loadAndRenderSectionSimple === 'function') {
+            const contentData = window.loadAndRenderSectionSimple(sectionId);
+            console.log(`Successfully loaded section: ${sectionId}`, contentData.meta.title);
+            
+            // Scroll to top of content
+            window.scrollTo(0, 0);
         } else {
             // Fallback to old system if new loader isn't available
-            console.warn('Chapter loader not available, using fallback');
+            console.warn('Simple chapter loader not available, using fallback');
             loadSectionContentFallback(sectionId);
         }
     } catch (error) {
@@ -349,6 +368,7 @@ window.loadSectionContent = async function loadSectionContent(sectionId) {
                     <div class="error-message">
                         <h2>Content Loading Error</h2>
                         <p>Unable to load content for ${sectionId}. Please try again later.</p>
+                        <p><small>Error: ${error.message}</small></p>
                         <button onclick="window.location.reload()" class="retry-btn">
                             <i class="fas fa-refresh"></i> Retry
                         </button>
@@ -358,7 +378,7 @@ window.loadSectionContent = async function loadSectionContent(sectionId) {
         }
         
         if (typeof window.showToast === 'function') {
-            window.showToast('Failed to load section content. Please try again.');
+            window.showToast('Failed to load section content: ' + error.message);
         }
     }
 }
@@ -395,6 +415,12 @@ function loadSectionContentFallback(sectionId) {
     // Initialize video player if present
     if (section.hasVideo) {
         initializeVideoPlayer();
+    }
+    
+    // Switch to Course tab when content is loaded
+    const courseTab = document.querySelector('[data-tab="course"]');
+    if (courseTab) {
+        courseTab.click();
     }
 }
 
@@ -553,6 +579,313 @@ function showToast(message) {
     setTimeout(() => {
         toast.remove();
     }, 3000);
+}
+
+/**
+ * Initialize mobile sidebar functionality with backdrop and improved UX
+ */
+function initializeMobileSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    
+    if (!sidebar || !sidebarToggle) {
+        console.warn('Sidebar or toggle button not found');
+        return;
+    }
+
+    // Create mobile backdrop
+    const backdrop = document.createElement('div');
+    backdrop.className = 'mobile-backdrop';
+    document.body.appendChild(backdrop);
+
+    // Track sidebar state
+    let sidebarOpen = false;
+
+    // Function to open sidebar
+    function openSidebar() {
+        sidebar.classList.add('mobile-visible');
+        backdrop.classList.add('active');
+        sidebarToggle.innerHTML = '<i class="fas fa-times"></i>';
+        sidebarOpen = true;
+        document.body.style.overflow = 'hidden'; // Prevent body scroll
+    }
+
+    // Function to close sidebar
+    function closeSidebar() {
+        sidebar.classList.remove('mobile-visible');
+        backdrop.classList.remove('active');
+        sidebarToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        sidebarOpen = false;
+        document.body.style.overflow = ''; // Restore body scroll
+    }
+
+    // Toggle sidebar on button click
+    sidebarToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (sidebarOpen) {
+            closeSidebar();
+        } else {
+            openSidebar();
+        }
+    });
+
+    // Close sidebar when backdrop is clicked
+    backdrop.addEventListener('click', function() {
+        closeSidebar();
+    });
+
+    // Close sidebar when clicking on TOC links on mobile
+    sidebar.addEventListener('click', function(e) {
+        if (e.target.classList.contains('toc-link') && window.innerWidth <= 767) {
+            // Add small delay to allow content to load
+            setTimeout(closeSidebar, 300);
+        }
+    });
+
+    // Handle keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && sidebarOpen) {
+            closeSidebar();
+        }
+    });
+
+    // Handle window resize to close sidebar if screen becomes larger
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 1023 && sidebarOpen) {
+            closeSidebar();
+        }
+    });
+
+    // Improve touch interactions for mobile navigation items
+    const navItems = sidebar.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        // Add touch feedback
+        item.addEventListener('touchstart', function() {
+            this.style.background = '#e9ecef';
+        });
+        
+        item.addEventListener('touchend', function() {
+            setTimeout(() => {
+                this.style.background = '';
+            }, 150);
+        });
+    });
+
+    // Add swipe gesture support for closing sidebar
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    sidebar.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+
+    sidebar.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipeGesture();
+    });
+
+    function handleSwipeGesture() {
+        const swipeThreshold = 100;
+        const swipeDistance = touchStartX - touchEndX;
+        
+        // Swipe left to close (only if sidebar is open)
+        if (swipeDistance > swipeThreshold && sidebarOpen) {
+            closeSidebar();
+        }
+    }
+
+    console.log('Mobile sidebar initialized successfully');
+}
+
+/**
+ * Initialize main navigation sidebar functionality
+ */
+function initializeMainNavigation() {
+    const mainNavToggle = document.getElementById('mainNavToggle');
+    const mainNav = document.getElementById('mainNav');
+    const mainNavClose = document.querySelector('.main-nav-close');
+    
+    if (!mainNavToggle || !mainNav) {
+        console.warn('Main navigation elements not found');
+        return;
+    }
+
+    // Create backdrop for main navigation
+    const mainNavBackdrop = document.createElement('div');
+    mainNavBackdrop.className = 'main-nav-backdrop';
+    mainNavBackdrop.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    `;
+    document.body.appendChild(mainNavBackdrop);
+
+    // Track navigation state
+    let mainNavOpen = false;
+
+    // Function to open main navigation
+    function openMainNav() {
+        mainNav.classList.add('active');
+        mainNavBackdrop.style.opacity = '1';
+        mainNavBackdrop.style.visibility = 'visible';
+        mainNavToggle.innerHTML = '<i class="fas fa-times"></i>';
+        mainNavOpen = true;
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Function to close main navigation
+    function closeMainNav() {
+        mainNav.classList.remove('active');
+        mainNavBackdrop.style.opacity = '0';
+        mainNavBackdrop.style.visibility = 'hidden';
+        mainNavToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        mainNavOpen = false;
+        document.body.style.overflow = '';
+    }
+
+    // Toggle navigation on button click
+    mainNavToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (mainNavOpen) {
+            closeMainNav();
+        } else {
+            openMainNav();
+        }
+    });
+
+    // Close navigation on close button click
+    if (mainNavClose) {
+        mainNavClose.addEventListener('click', function(e) {
+            e.preventDefault();
+            closeMainNav();
+        });
+    }
+
+    // Close navigation when backdrop is clicked
+    mainNavBackdrop.addEventListener('click', function() {
+        closeMainNav();
+    });
+
+    // Close navigation on navigation link click (mobile)
+    const mainNavLinks = mainNav.querySelectorAll('.main-nav-link');
+    mainNavLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 1023) {
+                setTimeout(closeMainNav, 200); // Small delay for better UX
+            }
+        });
+    });
+
+    // Handle keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mainNavOpen) {
+            closeMainNav();
+        }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 1024 && mainNavOpen) {
+            closeMainNav();
+        }
+    });
+
+    // Add touch feedback for mobile navigation links
+    mainNavLinks.forEach(link => {
+        link.addEventListener('touchstart', function() {
+            this.style.background = '#f0f0f0';
+        });
+        
+        link.addEventListener('touchend', function() {
+            setTimeout(() => {
+                this.style.background = '';
+            }, 150);
+        });
+    });
+
+    // Add swipe gesture support for closing navigation
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    mainNav.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+
+    mainNav.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleMainNavSwipeGesture();
+    });
+
+    function handleMainNavSwipeGesture() {
+        const swipeThreshold = 100;
+        const swipeDistance = touchEndX - touchStartX;
+        
+        // Swipe right to close (only if navigation is open)
+        if (swipeDistance > swipeThreshold && mainNavOpen) {
+            closeMainNav();
+        }
+    }
+
+    console.log('Main navigation initialized successfully');
+}
+
+/**
+ * Initialize URL-based routing for course navigation
+ */
+function initializeURLRouting() {
+    // Handle initial URL on page load
+    handleURLRoute();
+    
+    // Handle URL changes (hash changes)
+    window.addEventListener('hashchange', handleURLRoute);
+    
+    // Handle popstate for browser back/forward
+    window.addEventListener('popstate', handleURLRoute);
+}
+
+/**
+ * Handle URL routing based on hash
+ */
+function handleURLRoute() {
+    const hash = window.location.hash;
+    
+    if (hash.startsWith('#course/')) {
+        // Extract section ID from URL
+        const sectionId = hash.replace('#course/', '');
+        
+        // Switch to Course tab
+        const courseTab = document.querySelector('[data-tab="course"]');
+        if (courseTab && !courseTab.classList.contains('active')) {
+            courseTab.click();
+        }
+        
+        // Load the section content
+        if (sectionId && typeof window.loadSectionContent === 'function') {
+            console.log('URL routing - Loading section:', sectionId);
+            
+            // Small delay to ensure tab switch completes
+            setTimeout(() => {
+                window.loadSectionContent(sectionId);
+            }, 100);
+        }
+    } else if (hash === '#table-of-contents' || hash === '') {
+        // Switch to Table of Contents tab
+        const tocTab = document.querySelector('[data-tab="table-of-contents"]');
+        if (tocTab && !tocTab.classList.contains('active')) {
+            tocTab.click();
+        }
+    }
 }
 
 // Legacy courseContent for backward compatibility - will be removed in future version

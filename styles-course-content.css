@@ -1,0 +1,475 @@
+/**
+ * Red Hat Academy RH124 - Course Content Styles
+ * Additional styles for course content rendering
+ */
+
+/* Progress Map in Course View */
+.content-area .progress-map {
+    display: flex;
+    gap: 2px;
+    padding: 16px 20px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    margin-bottom: 0;
+    overflow-x: auto;
+}
+
+.content-area .progress-map-bar {
+    min-width: 40px;
+    height: 32px;
+    background: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6c757d;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.content-area .progress-map-bar.preface {
+    background: #6f42c1;
+    color: white;
+}
+
+.content-area .progress-map-bar.chapter {
+    background: #6c757d;
+    color: white;
+}
+
+.content-area .progress-map-bar.section {
+    width: 8px;
+    min-width: 8px;
+    height: 24px;
+    margin: 0 1px;
+}
+
+.content-area .progress-map-bar.visited {
+    background: #28a745;
+    color: white;
+}
+
+.content-area .progress-map-bar.is-active,
+.content-area .progress-map-bar.active {
+    background: #dc3545;
+    color: white;
+    transform: scale(1.1);
+}
+
+.content-area .progress-map-bar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Timeline Styles */
+.timeline {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #cc0000;
+}
+
+.timeline-item {
+    margin-bottom: 12px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.timeline-item:before {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    background: #cc0000;
+    border-radius: 50%;
+}
+
+.timeline-item strong {
+    color: #cc0000;
+    margin-right: 8px;
+}
+
+/* Enhanced Info Box */
+.info-box {
+    background: #e7f3ff;
+    border: 1px solid #b8daff;
+    border-left: 4px solid #007bff;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.info-box i {
+    color: #0062cc;
+    font-size: 20px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.info-content {
+    flex: 1;
+    color: #004085;
+    line-height: 1.6;
+}
+
+.info-content strong {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* Chapter Navigation */
+.chapter-navigation {
+    margin-bottom: 24px;
+}
+
+.progress-bar-container {
+    margin-bottom: 20px;
+}
+
+.progress-chapters {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    overflow-x: auto;
+}
+
+.chapter-item {
+    min-width: 32px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #6c757d;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 3px;
+}
+
+.chapter-item.active {
+    background: #dc3545;
+    transform: scale(1.1);
+}
+
+.chapter-item:hover {
+    background: #495057;
+}
+
+.chapter-nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+/* Content Sections */
+.section-content {
+    padding: 0;
+}
+
+.content-header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.content-header h1 {
+    color: #151515;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+.chapter-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.chapter-number {
+    background: #cc0000;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.estimated-time {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+
+/* Content Body */
+.content-body {
+    line-height: 1.7;
+}
+
+.content-section {
+    margin-bottom: 32px;
+}
+
+.content-section h2 {
+    color: #cc0000;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.content-section h3 {
+    color: #495057;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 24px 0 12px 0;
+}
+
+.content-section p {
+    color: #495057;
+    margin-bottom: 16px;
+    font-size: 16px;
+}
+
+.content-section ul,
+.content-section ol {
+    color: #495057;
+    padding-left: 24px;
+    margin-bottom: 16px;
+}
+
+.content-section li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+/* Mobile Responsive */
+@media (max-width: 767px) {
+    .content-area .progress-map {
+        padding: 12px;
+    }
+    
+    .content-area .progress-map-bar {
+        min-width: 32px;
+        height: 28px;
+        font-size: 11px;
+    }
+    
+    .content-header h1 {
+        font-size: 24px;
+    }
+    
+    .content-section h2 {
+        font-size: 20px;
+    }
+    
+    .timeline {
+        padding: 16px;
+    }
+    
+    .chapter-navigation {
+        margin-bottom: 20px;
+    }
+    
+    .chapter-nav-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .nav-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Smooth Transitions */
+.content-area {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Lab Features and Cards */
+.lab-features {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.lab-features h4 {
+    color: #495057;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.lab-features ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.lab-features li {
+    color: #495057;
+    margin-bottom: 6px;
+}
+
+.lab-action-card {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+}
+
+.lab-action-card h4 {
+    color: #495057;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lab-action-card h4 i {
+    color: #cc0000;
+}
+
+.lab-action-card p {
+    color: #495057;
+    margin-bottom: 12px;
+}
+
+.lab-action-card ul {
+    margin: 12px 0;
+    padding-left: 20px;
+}
+
+.lab-action-card .note {
+    font-style: italic;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.pass {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.fail {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+/* Keyboard Key Styling */
+kbd {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-family: monospace;
+    font-size: 0.9em;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Red Hat Style Navigation Buttons */
+.pf-v5-l-flex {
+    display: flex;
+}
+
+.pf-m-justify-content-space-between {
+    justify-content: space-between;
+}
+
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: 1px solid #d2d2d2;
+    background: white;
+    color: #151515;
+    border-radius: 3px;
+    font-weight: 400;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    font-family: 'Red Hat Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+a.nav-btn {
+    text-decoration: none;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background: #f5f5f5;
+    border-color: #151515;
+    color: #151515;
+    text-decoration: none;
+}
+
+.nav-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    color: #6a6e73;
+}
+
+.nav-btn.prev .fa-chevron-left {
+    margin-right: 4px;
+}
+
+.nav-btn.next .fa-chevron-right {
+    margin-left: 4px;
+}
+
+.left-page-navigation,
+.right-page-navigation {
+    display: flex;
+    align-items: center;
+}
+
+/* Mobile optimizations for navigation */
+@media (max-width: 767px) {
+    .pf-v5-l-flex {
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 20px;
+    }
+    
+    .nav-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

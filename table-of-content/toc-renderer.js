@@ -92,7 +92,8 @@ class TOCRenderer {
         const listItem = document.createElement('li');
         
         const link = document.createElement('a');
-        link.href = '#';
+        // Use proper href with section ID for better navigation and SEO
+        link.href = section.hasContent ? `#course/${section.id}` : '#';
         link.className = 'toc-link';
         link.textContent = section.title;
         
@@ -126,9 +127,14 @@ class TOCRenderer {
      */
     attachEventListeners() {
         const tocLinks = document.querySelectorAll('.toc-link');
+        console.log(`Attaching event listeners to ${tocLinks.length} TOC links`);
         
-        tocLinks.forEach(link => {
+        tocLinks.forEach((link, index) => {
+            console.log(`Attaching listener to link ${index}:`, link.textContent.substring(0, 30));
             link.addEventListener('click', this.handleSectionClick.bind(this));
+            
+            // Add visual debugging - change cursor to indicate clickable
+            link.style.cursor = 'pointer';
         });
 
         // Add chapter collapse/expand functionality
@@ -136,6 +142,8 @@ class TOCRenderer {
         chapterTitles.forEach(title => {
             title.addEventListener('click', this.handleChapterToggle.bind(this));
         });
+        
+        console.log('All TOC event listeners attached successfully');
     }
 
     /**
@@ -143,10 +151,23 @@ class TOCRenderer {
      * @param {Event} event - Click event
      */
     handleSectionClick(event) {
+        console.log('=== CLICK HANDLER CALLED ===');
+        
+        // Prevent default navigation behavior
         event.preventDefault();
+        event.stopPropagation();
+        
+        console.log('Event prevented and stopped');
         
         const link = event.currentTarget;
         const sectionId = link.getAttribute('data-section');
+        const sectionIdFromDataset = link.getAttribute('data-section-id');
+        
+        console.log('=== TOC CLICK DEBUG ===');
+        console.log('Link clicked:', link);
+        console.log('data-section:', sectionId);
+        console.log('data-section-id:', sectionIdFromDataset);
+        console.log('All attributes:', Array.from(link.attributes).map(attr => `${attr.name}="${attr.value}"`));
         
         // Remove active class from all links
         document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
@@ -154,32 +175,44 @@ class TOCRenderer {
         // Add active class to clicked link
         link.classList.add('active');
 
-        if (sectionId) {
-            // Check if section has content
-            if (window.courseContent && window.courseContent[sectionId]) {
+        // Use sectionId if available, otherwise fall back to sectionIdFromDataset
+        const actualSectionId = sectionId || sectionIdFromDataset;
+        
+        if (actualSectionId) {
+            // Check if section has content using TOC data
+            const sectionData = this.getSectionData(actualSectionId);
+            console.log('TOC Click - Actual Section ID:', actualSectionId, 'Section Data:', sectionData);
+            
+            if (sectionData && sectionData.hasContent) {
+                console.log('Section has content, loading...');
+                
                 // Switch to Course tab
                 const courseTab = document.querySelector('[data-tab="course"]');
                 if (courseTab) {
+                    console.log('Switching to Course tab...');
                     courseTab.click();
                 }
                 
-                // Load section content (using existing function from main script)
+                // Load section content using new chapter loader system
                 if (typeof window.loadSectionContent === 'function') {
-                    window.loadSectionContent(sectionId);
+                    console.log('Calling loadSectionContent for:', actualSectionId);
+                    window.loadSectionContent(actualSectionId);
                 } else {
                     console.warn('loadSectionContent function not available');
                 }
             } else {
+                console.log('Section has no content or not found. SectionData:', sectionData);
                 // Show coming soon message
                 this.showComingSoonMessage(link.textContent);
             }
         } else {
+            console.log('No section ID found in either data-section or data-section-id');
             // Section has no content yet
             this.showComingSoonMessage(link.textContent);
         }
 
         // Track section selection for analytics
-        this.trackSectionSelection(sectionId, link.textContent);
+        this.trackSectionSelection(actualSectionId, link.textContent);
     }
 
     /**
@@ -357,13 +390,34 @@ let tocRenderer = null;
  * Call this function after both TOC data and DOM are loaded
  */
 function initializeTOC() {
+    console.log('=== INITIALIZING TOC ===');
+    
     if (typeof window.TOC_DATA === 'undefined') {
         console.error('TOC_DATA not loaded. Make sure toc-data.js is included first.');
         return;
     }
 
+    if (tocRenderer) {
+        console.log('TOC Renderer already exists, re-initializing...');
+    }
+
     tocRenderer = new TOCRenderer();
     tocRenderer.init(window.TOC_DATA);
+    
+    console.log('TOC initialization complete');
+    
+    // Debug: Verify links are set up correctly
+    setTimeout(() => {
+        const links = document.querySelectorAll('.toc-link');
+        console.log('=== TOC LINK VERIFICATION ===');
+        console.log(`Found ${links.length} TOC links`);
+        links.forEach((link, index) => {
+            const hasDataSection = link.hasAttribute('data-section');
+            const hasDataSectionId = link.hasAttribute('data-section-id');
+            const hasClickListener = link.onclick !== null || link.addEventListener !== null;
+            console.log(`Link ${index}: "${link.textContent.substring(0, 30)}" - data-section: ${hasDataSection}, data-section-id: ${hasDataSectionId}`);
+        });
+    }, 100);
 }
 
 // Auto-initialize if DOM is ready and data is available

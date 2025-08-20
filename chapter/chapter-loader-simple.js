@@ -1,177 +1,53 @@
 /**
- * Red Hat Academy RH124 - Chapter Content Loader
+ * Red Hat Academy RH124 - Simple Chapter Content Loader (CSP Compliant)
  * 
- * This module handles dynamic loading and rendering of chapter content
- * It provides a unified system for loading modular chapter content files
+ * This module handles content loading without dynamic script loading
+ * to comply with Content Security Policy restrictions
  */
 
-class ChapterLoader {
+class SimpleChapterLoader {
     constructor() {
-        this.loadedContent = new Map();
-        this.loadingPromises = new Map();
-        this.baseChapterPath = 'chapter/';
+        this.contentRegistry = new Map();
         this.initialized = false;
     }
 
     /**
-     * Initialize the chapter loader
+     * Initialize the chapter loader and register all available content
      */
     init() {
+        // Register all available content from global variables
+        this.registerContent('section-a-1', window.SECTION_A1_CONTENT);
+        this.registerContent('section-a-2', window.SECTION_A2_CONTENT);
+        this.registerContent('section-a-3', window.SECTION_A3_CONTENT);
+        
+        // Register Chapter 1 content
+        this.registerContent('section-1-1', window.SECTION_1_1_CONTENT);
+        
         this.initialized = true;
-        console.log('Chapter Loader initialized successfully');
+        console.log('Simple Chapter Loader initialized with', this.contentRegistry.size, 'sections');
     }
 
     /**
-     * Load chapter content by section ID
-     * @param {string} sectionId - Section identifier (e.g., 'section-a-1')
-     * @returns {Promise<Object>} Chapter content data
-     */
-    async loadChapterContent(sectionId) {
-        console.log('Chapter Loader - Loading content for:', sectionId);
-        
-        // Check if already loaded
-        if (this.loadedContent.has(sectionId)) {
-            console.log('Content already loaded from cache');
-            return this.loadedContent.get(sectionId);
-        }
-
-        // Check if currently loading
-        if (this.loadingPromises.has(sectionId)) {
-            console.log('Content currently loading, waiting...');
-            return this.loadingPromises.get(sectionId);
-        }
-
-        // Start loading
-        console.log('Starting fresh load for:', sectionId);
-        const loadingPromise = this._loadContentFile(sectionId);
-        this.loadingPromises.set(sectionId, loadingPromise);
-
-        try {
-            const content = await loadingPromise;
-            this.loadedContent.set(sectionId, content);
-            this.loadingPromises.delete(sectionId);
-            console.log('Successfully loaded and cached content for:', sectionId);
-            return content;
-        } catch (error) {
-            this.loadingPromises.delete(sectionId);
-            console.error('Failed to load content for:', sectionId, error);
-            throw error;
-        }
-    }
-
-    /**
-     * Load content file for a specific section
+     * Register content in the registry
      * @param {string} sectionId - Section identifier
-     * @returns {Promise<Object>} Content data
-     * @private
+     * @param {Object} contentData - Content data object
      */
-    async _loadContentFile(sectionId) {
-        const contentPath = this._getContentPath(sectionId);
-        
-        try {
-            // Load the script dynamically
-            await this._loadScript(contentPath);
-            
-            // Get the content from the global variable
-            const content = this._extractContentFromGlobal(sectionId);
-            
-            if (!content) {
-                throw new Error(`Content not found for section: ${sectionId}`);
-            }
-
-            console.log(`Successfully loaded content for ${sectionId}`);
-            return content;
-
-        } catch (error) {
-            console.error(`Failed to load chapter content for ${sectionId}:`, error);
-            throw new Error(`Unable to load content for ${sectionId}: ${error.message}`);
+    registerContent(sectionId, contentData) {
+        if (contentData) {
+            this.contentRegistry.set(sectionId, contentData);
+            console.log(`Registered content for ${sectionId}`);
+        } else {
+            console.warn(`Content not available for ${sectionId}`);
         }
     }
 
     /**
-     * Get the file path for a section's content
-     * @param {string} sectionId - Section identifier
-     * @returns {string} File path
-     * @private
-     */
-    _getContentPath(sectionId) {
-        // Map section IDs to their file paths
-        const pathMap = {
-            'section-a-1': 'intro/section-a-1.js',
-            'section-a-2': 'intro/section-a-2.js', 
-            'section-a-3': 'intro/section-a-3.js',
-            // Chapter 1 sections (add as needed)
-            'section-1-1': 'chapter1/section-1-1.js',
-            'section-1-2': 'chapter1/section-1-2.js',
-            'section-1-3': 'chapter1/section-1-3.js',
-            // Add more mappings as content is created
-        };
-
-        const relativePath = pathMap[sectionId];
-        if (!relativePath) {
-            throw new Error(`No content path mapped for section: ${sectionId}`);
-        }
-
-        return `${this.baseChapterPath}${relativePath}`;
-    }
-
-    /**
-     * Dynamically load a JavaScript file
-     * @param {string} scriptPath - Path to the script file
-     * @returns {Promise} Promise that resolves when script is loaded
-     * @private
-     */
-    _loadScript(scriptPath) {
-        return new Promise((resolve, reject) => {
-            // Check if script is already loaded
-            const existingScript = document.querySelector(`script[src="${scriptPath}"]`);
-            if (existingScript) {
-                resolve();
-                return;
-            }
-
-            const script = document.createElement('script');
-            script.src = scriptPath;
-            script.type = 'text/javascript';
-
-            script.onload = () => {
-                console.log(`Script loaded: ${scriptPath}`);
-                resolve();
-            };
-
-            script.onerror = () => {
-                reject(new Error(`Failed to load script: ${scriptPath}`));
-            };
-
-            document.head.appendChild(script);
-        });
-    }
-
-    /**
-     * Extract content from global variables set by loaded scripts
+     * Get content for a section (synchronous)
      * @param {string} sectionId - Section identifier
      * @returns {Object|null} Content data or null if not found
-     * @private
      */
-    _extractContentFromGlobal(sectionId) {
-        // Map section IDs to their global variable names
-        const globalMap = {
-            'section-a-1': 'SECTION_A1_CONTENT',
-            'section-a-2': 'SECTION_A2_CONTENT',
-            'section-a-3': 'SECTION_A3_CONTENT',
-            // Chapter 1 sections (add as needed)
-            'section-1-1': 'SECTION_1_1_CONTENT',
-            'section-1-2': 'SECTION_1_2_CONTENT',
-            'section-1-3': 'SECTION_1_3_CONTENT',
-            // Add more mappings as content is created
-        };
-
-        const globalVarName = globalMap[sectionId];
-        if (!globalVarName || !window[globalVarName]) {
-            return null;
-        }
-
-        return window[globalVarName];
+    getContent(sectionId) {
+        return this.contentRegistry.get(sectionId) || null;
     }
 
     /**
@@ -231,28 +107,45 @@ class ChapterLoader {
      * @private
      */
     _buildChapterNavigation(navigation) {
-        const { currentChapter, chapters, hasPrevious, hasNext } = navigation;
+        const { currentChapter, chapters, hasPrevious, hasNext, previousSection, nextSection } = navigation;
 
         const chapterItems = chapters.map(chapter => {
             const isActive = chapter === currentChapter;
             return `<div class="chapter-item ${isActive ? 'active' : ''}" data-chapter="${chapter}">${chapter}</div>`;
         }).join('');
 
+        // Build navigation links with proper content
+        const prevLink = previousSection ? 
+            `<a href="#course/${previousSection.id}" class="nav-btn prev">
+                <span class="left-page-navigation">
+                    <i class="fas fa-chevron-left"></i>Previous
+                </span>
+            </a>` :
+            `<button class="nav-btn prev" disabled>
+                <span class="left-page-navigation">
+                    <i class="fas fa-chevron-left"></i>Previous
+                </span>
+            </button>`;
+
+        const nextLink = nextSection ? 
+            `<a href="#course/${nextSection.id}" class="nav-btn next">
+                <span class="right-page-navigation">
+                    Next<i class="fas fa-chevron-right"></i>
+                </span>
+            </a>` :
+            `<button class="nav-btn next" disabled>
+                <span class="right-page-navigation">
+                    Next<i class="fas fa-chevron-right"></i>
+                </span>
+            </button>`;
+
         return `
-            <div class="chapter-navigation">
-                <div class="progress-bar-container">
-                    <div class="progress-chapters">
-                        ${chapterItems}
-                    </div>
-                </div>
-                <div class="chapter-nav-buttons">
-                    <button class="nav-btn prev" ${!hasPrevious ? 'disabled' : ''}>
-                        <i class="fas fa-chevron-left"></i> Previous
-                    </button>
-                    <button class="nav-btn next" ${!hasNext ? 'disabled' : ''}>
-                        Next <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
+            <div class="progress-map">
+                ${chapterItems}
+            </div>
+            <div class="pf-v5-l-flex pf-m-justify-content-space-between">
+                ${prevLink}
+                ${nextLink}
             </div>
         `;
     }
@@ -374,11 +267,6 @@ class ChapterLoader {
 
         // Initialize chapter navigation
         this._initializeChapterNavigation(contentData.navigation);
-
-        // Track analytics if enabled
-        if (contentData.analytics && contentData.analytics.trackViews) {
-            this._trackContentView(contentData);
-        }
     }
 
     /**
@@ -422,39 +310,15 @@ class ChapterLoader {
 
         if (prevBtn && !prevBtn.disabled) {
             prevBtn.addEventListener('click', () => {
-                // Handle previous navigation
                 console.log('Navigate to previous section');
+                // TODO: Implement navigation
             });
         }
 
         if (nextBtn && !nextBtn.disabled) {
             nextBtn.addEventListener('click', () => {
-                // Handle next navigation
                 console.log('Navigate to next section');
-            });
-        }
-    }
-
-    /**
-     * Track content view for analytics
-     * @param {Object} contentData - Chapter content data
-     * @private
-     */
-    _trackContentView(contentData) {
-        const { meta, analytics } = contentData;
-        
-        console.log('Content view tracked:', {
-            section: meta.id,
-            title: meta.title,
-            timestamp: new Date().toISOString()
-        });
-
-        // Add analytics integration here
-        if (window.gtag) {
-            gtag('event', 'content_view', {
-                content_id: meta.id,
-                content_title: meta.title,
-                content_category: analytics.category
+                // TODO: Implement navigation
             });
         }
     }
@@ -465,65 +329,59 @@ class ChapterLoader {
      */
     getStats() {
         return {
-            loadedSections: this.loadedContent.size,
-            currentlyLoading: this.loadingPromises.size,
-            loadedSectionIds: Array.from(this.loadedContent.keys())
+            registeredSections: this.contentRegistry.size,
+            availableSections: Array.from(this.contentRegistry.keys())
         };
     }
-
-    /**
-     * Clear loaded content cache
-     */
-    clearCache() {
-        this.loadedContent.clear();
-        console.log('Chapter content cache cleared');
-    }
 }
 
-// Initialize global chapter loader instance
-let chapterLoader = null;
+// Initialize global simple chapter loader instance
+let simpleChapterLoader = null;
 
 /**
- * Initialize the chapter loader system
+ * Initialize the simple chapter loader system
  */
-function initializeChapterLoader() {
-    chapterLoader = new ChapterLoader();
-    chapterLoader.init();
+function initializeSimpleChapterLoader() {
+    simpleChapterLoader = new SimpleChapterLoader();
+    simpleChapterLoader.init();
 }
 
 /**
- * Load and render a section by ID
+ * Load and render a section by ID (synchronous)
  * @param {string} sectionId - Section identifier
- * @returns {Promise} Promise that resolves when content is loaded and rendered
+ * @returns {Object} Content data that was rendered
  */
-async function loadAndRenderSection(sectionId) {
-    if (!chapterLoader) {
-        initializeChapterLoader();
+function loadAndRenderSectionSimple(sectionId) {
+    if (!simpleChapterLoader) {
+        initializeSimpleChapterLoader();
     }
 
-    try {
-        const contentData = await chapterLoader.loadChapterContent(sectionId);
-        chapterLoader.renderContent(contentData);
-        return contentData;
-    } catch (error) {
-        console.error('Failed to load and render section:', error);
-        throw error;
+    console.log('Simple loader - Loading section:', sectionId);
+    
+    const contentData = simpleChapterLoader.getContent(sectionId);
+    if (!contentData) {
+        throw new Error(`Content not found for section: ${sectionId}`);
     }
+
+    simpleChapterLoader.renderContent(contentData);
+    console.log('Simple loader - Content rendered for:', sectionId);
+    
+    return contentData;
 }
 
-// Auto-initialize
+// Auto-initialize when DOM is ready
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeChapterLoader);
+    document.addEventListener('DOMContentLoaded', initializeSimpleChapterLoader);
 } else {
-    initializeChapterLoader();
+    initializeSimpleChapterLoader();
 }
 
 // Export for use in other modules
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { ChapterLoader, initializeChapterLoader, loadAndRenderSection };
+    module.exports = { SimpleChapterLoader, initializeSimpleChapterLoader, loadAndRenderSectionSimple };
 } else {
-    window.ChapterLoader = ChapterLoader;
-    window.initializeChapterLoader = initializeChapterLoader;
-    window.loadAndRenderSection = loadAndRenderSection;
-    window.chapterLoader = chapterLoader;
+    window.SimpleChapterLoader = SimpleChapterLoader;
+    window.initializeSimpleChapterLoader = initializeSimpleChapterLoader;
+    window.loadAndRenderSectionSimple = loadAndRenderSectionSimple;
+    window.simpleChapterLoader = simpleChapterLoader;
 }

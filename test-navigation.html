@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Navigation - Red Hat Academy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #cc0000;
+            margin-bottom: 20px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .test-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .test-list {
+            list-style: none;
+            padding: 0;
+        }
+        .test-list li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status.pass {
+            background: #28a745;
+            color: white;
+        }
+        .status.fail {
+            background: #dc3545;
+            color: white;
+        }
+        .status.pending {
+            background: #ffc107;
+            color: #333;
+        }
+        .test-button {
+            background: #cc0000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .test-button:hover {
+            background: #aa0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Red Hat Academy Navigation Test</h1>
+        
+        <div class="test-section">
+            <h2>Navigation Flow Test</h2>
+            <p>This page tests the navigation flow from sidebar tree to course content rendering.</p>
+            
+            <h3>Expected Behavior:</h3>
+            <ul class="test-list">
+                <li>
+                    <span>1. Click on chapter in sidebar tree</span>
+                    <span class="status pending" id="test1">Pending</span>
+                </li>
+                <li>
+                    <span>2. Chapter expands to show sections</span>
+                    <span class="status pending" id="test2">Pending</span>
+                </li>
+                <li>
+                    <span>3. Click on section with content</span>
+                    <span class="status pending" id="test3">Pending</span>
+                </li>
+                <li>
+                    <span>4. System switches to Course tab</span>
+                    <span class="status pending" id="test4">Pending</span>
+                </li>
+                <li>
+                    <span>5. Content renders in Course tab</span>
+                    <span class="status pending" id="test5">Pending</span>
+                </li>
+                <li>
+                    <span>6. Sidebar updates to show current location</span>
+                    <span class="status pending" id="test6">Pending</span>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <h2>Test Actions</h2>
+            <button class="test-button" onclick="window.location.href='index.html'">Go to Main Page</button>
+            <button class="test-button" onclick="testSidebarNavigation()">Test Sidebar Navigation</button>
+            <button class="test-button" onclick="checkContentLoading()">Check Content Loading</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>Available Content Sections</h2>
+            <ul class="test-list">
+                <li>
+                    <span>Section A.1: Red Hat System Administration I</span>
+                    <span class="status pass">Available</span>
+                </li>
+                <li>
+                    <span>Section A.2: Orientation to the Classroom Environment</span>
+                    <span class="status pass">Available</span>
+                </li>
+                <li>
+                    <span>Section A.3: Performing Lab Exercises</span>
+                    <span class="status pass">Available</span>
+                </li>
+                <li>
+                    <span>Section 1.1: What Is Linux?</span>
+                    <span class="status pass">Available</span>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <h2>Test Results</h2>
+            <div id="test-results">
+                <p>Click the test buttons above to run navigation tests.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function testSidebarNavigation() {
+            const results = document.getElementById('test-results');
+            results.innerHTML = '<p>Opening main page in new tab to test sidebar navigation...</p>';
+            
+            // Open main page in new tab
+            window.open('index.html#test-navigation', '_blank');
+            
+            results.innerHTML += '<p>Instructions:</p>';
+            results.innerHTML += '<ol>';
+            results.innerHTML += '<li>Open the sidebar by clicking the hamburger menu</li>';
+            results.innerHTML += '<li>Click on "Preface A: Introduction" to expand it</li>';
+            results.innerHTML += '<li>Click on "Section A.1: Red Hat System Administration I"</li>';
+            results.innerHTML += '<li>Verify that the Course tab opens with the content</li>';
+            results.innerHTML += '<li>Try clicking on "Chapter 1" and then "Section 1.1: What Is Linux?"</li>';
+            results.innerHTML += '</ol>';
+        }
+        
+        function checkContentLoading() {
+            const results = document.getElementById('test-results');
+            results.innerHTML = '<h3>Content Loading Check:</h3>';
+            
+            // Check if content files are loaded
+            const contentChecks = [
+                { name: 'SECTION_A1_CONTENT', exists: typeof window.SECTION_A1_CONTENT !== 'undefined' },
+                { name: 'SECTION_A2_CONTENT', exists: typeof window.SECTION_A2_CONTENT !== 'undefined' },
+                { name: 'SECTION_A3_CONTENT', exists: typeof window.SECTION_A3_CONTENT !== 'undefined' },
+                { name: 'SECTION_1_1_CONTENT', exists: typeof window.SECTION_1_1_CONTENT !== 'undefined' },
+                { name: 'SimpleChapterLoader', exists: typeof window.SimpleChapterLoader !== 'undefined' },
+                { name: 'SidebarTreeRenderer', exists: typeof window.SidebarTreeRenderer !== 'undefined' }
+            ];
+            
+            results.innerHTML += '<ul>';
+            contentChecks.forEach(check => {
+                const status = check.exists ? 'Loaded ✓' : 'Not Loaded ✗';
+                const color = check.exists ? 'green' : 'red';
+                results.innerHTML += `<li style="color: ${color}">${check.name}: ${status}</li>`;
+            });
+            results.innerHTML += '</ul>';
+        }
+    </script>
+</body>
+</html>

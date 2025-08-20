@@ -28,14 +28,14 @@ const TOC_DATA = {
                 {
                     id: "section-a-2", 
                     title: "Section A.2: Orientation to the Classroom Environment",
-                    hasContent: false,
+                    hasContent: true,
                     hasVideo: false,
                     duration: "10 minutes"
                 },
                 {
                     id: "section-a-3",
                     title: "Section A.3: Performing Lab Exercises", 
-                    hasContent: false,
+                    hasContent: true,
                     hasVideo: false,
                     duration: "15 minutes"
                 }
@@ -49,9 +49,9 @@ const TOC_DATA = {
                 {
                     id: "section-1-1",
                     title: "Section 1.1: What Is Linux?",
-                    hasContent: false,
-                    hasVideo: false,
-                    duration: "20 minutes"
+                    hasContent: true,
+                    hasVideo: true,
+                    duration: "30 minutes"
                 },
                 {
                     id: "section-1-2",

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test - TOC Content Loading</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .debug-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .info { background: #d1ecf1; border-color: #bee5eb; }
+        button { padding: 10px 15px; margin: 5px; }
+        pre { background: #f8f9fa; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Debug Test - TOC Content Loading</h1>
+    
+    <div class="debug-section info">
+        <h3>Test: TOC Data Loading</h3>
+        <button onclick="testTOCData()">Test TOC Data</button>
+        <div id="toc-data-result"></div>
+    </div>
+    
+    <div class="debug-section info">
+        <h3>Test: Section Data Lookup</h3>
+        <button onclick="testSectionData()">Test Section A.1 Data</button>
+        <div id="section-data-result"></div>
+    </div>
+    
+    <div class="debug-section info">
+        <h3>Test: Chapter Loader</h3>
+        <button onclick="testChapterLoader()">Test Chapter Loader</button>
+        <div id="chapter-loader-result"></div>
+    </div>
+    
+    <div class="debug-section info">
+        <h3>Test: Content Loading</h3>
+        <button onclick="testContentLoading()">Test Load Section A.1</button>
+        <div id="content-loading-result"></div>
+    </div>
+
+    <!-- Load all required scripts in order -->
+    <script src="table-of-content/toc-data.js"></script>
+    <script src="table-of-content/toc-renderer.js"></script>
+    <script src="chapter/chapter-loader.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        function testTOCData() {
+            const result = document.getElementById('toc-data-result');
+            try {
+                if (typeof window.TOC_DATA !== 'undefined') {
+                    const sectionA1 = window.TOC_DATA.chapters
+                        .find(ch => ch.id === 'preface-a')
+                        ?.sections.find(s => s.id === 'section-a-1');
+                    
+                    result.innerHTML = `
+                        <div class="success">
+                            <strong>TOC Data Loaded Successfully!</strong><br>
+                            Section A.1 Data: <pre>${JSON.stringify(sectionA1, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    result.innerHTML = '<div class="error">TOC_DATA not found!</div>';
+                }
+            } catch (error) {
+                result.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+
+        function testSectionData() {
+            const result = document.getElementById('section-data-result');
+            try {
+                if (window.tocRenderer) {
+                    const sectionData = window.tocRenderer.getSectionData('section-a-1');
+                    result.innerHTML = `
+                        <div class="success">
+                            <strong>Section Data Retrieved!</strong><br>
+                            <pre>${JSON.stringify(sectionData, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    result.innerHTML = '<div class="error">TOC Renderer not initialized!</div>';
+                }
+            } catch (error) {
+                result.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+
+        function testChapterLoader() {
+            const result = document.getElementById('chapter-loader-result');
+            try {
+                if (window.chapterLoader) {
+                    result.innerHTML = `
+                        <div class="success">
+                            <strong>Chapter Loader Available!</strong><br>
+                            Stats: <pre>${JSON.stringify(window.chapterLoader.getStats(), null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    result.innerHTML = '<div class="error">Chapter Loader not available!</div>';
+                }
+            } catch (error) {
+                result.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+
+        async function testContentLoading() {
+            const result = document.getElementById('content-loading-result');
+            result.innerHTML = '<div class="info">Loading content...</div>';
+            
+            try {
+                if (typeof window.loadAndRenderSection === 'function') {
+                    const content = await window.loadAndRenderSection('section-a-1');
+                    result.innerHTML = `
+                        <div class="success">
+                            <strong>Content Loaded Successfully!</strong><br>
+                            Content Meta: <pre>${JSON.stringify(content.meta, null, 2)}</pre>
+                        </div>
+                    `;
+                } else {
+                    result.innerHTML = '<div class="error">loadAndRenderSection function not available!</div>';
+                }
+            } catch (error) {
+                result.innerHTML = `<div class="error">Content Loading Failed: ${error.message}</div>`;
+            }
+        }
+
+        // Auto-run tests when page loads
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                console.log('Running auto-tests...');
+                testTOCData();
+                testSectionData();
+                testChapterLoader();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
