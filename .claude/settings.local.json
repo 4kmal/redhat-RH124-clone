@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:rha.ole.redhat.com)",
+      "Bash(python:*)"
+    ],
+    "deny": []
+  }
+}

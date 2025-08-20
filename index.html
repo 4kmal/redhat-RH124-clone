@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Hat System Administration II 9.3</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="redhat-header">
+        <div class="header-top">
+            <div class="header-nav">
+                <span>Redhat.com</span>
+                <span>Support</span>
+                <span>FAQ</span>
+                <div class="language-selector">
+                    <span>English</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <span class="user-id">a192193</span>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="header-brand">
+                <img src="asset/image/logo-hat.png" alt="Red Hat" class="logo-hat">
+                <span class="brand-text">Red Hat Academy</span>
+            </div>
+            <nav class="main-nav">
+                <a href="#">Access Courses and Assignments</a>
+                <a href="#">Access Student Resources</a>
+                <a href="#">Give Feedback</a>
+                <a href="#">Get Support</a>
+                <a href="#">Talent Network Portal</a>
+            </nav>
+        </div>
+        <div class="header-info">
+            <div class="version-info">
+                <span class="portal-logo">Red Hat Academy Portal Logo</span>
+                <span class="version">Version 1.7.1</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <button class="sidebar-toggle" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <aside class="sidebar" id="sidebar">
+            <div class="course-info">
+                <h2>RH124 - System Administration I</h2>
+                <div class="progress-overview">
+                    <ul id="progress-map-container" class="progress-map"></ul>
+                    <span class="progress-text">15% Complete</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3>Course Modules</h3>
+                    <ul class="nav-list">
+                        <li class="nav-item completed">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Introduction to Red Hat Enterprise Linux</span>
+                        </li>
+                        <li class="nav-item current">
+                            <i class="fas fa-play-circle"></i>
+                            <span>Accessing the Command Line</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Managing Files from the Command Line</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Getting Help in Red Hat Enterprise Linux</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Creating, Viewing, and Editing Text Files</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Managing Local Users and Groups</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Controlling Access to Files</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Monitoring and Managing Processes</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Controlling Services and Daemons</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Configuring and Securing SSH</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Analyzing and Storing Logs</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Managing Networking</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Archiving and Transferring Files</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Installing and Updating Software</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Accessing Linux File Systems</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Analyzing Servers and Getting Support</span>
+                        </li>
+                        <li class="nav-item">
+                            <i class="far fa-circle"></i>
+                            <span>Comprehensive Review</span>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="course-container">
+                <div class="course-header">
+                    <h1>Red Hat System Administration I 9.3</h1>
+                    <div class="course-actions">
+                        <button class="download-badge">
+                            <i class="fas fa-download"></i> Download digital badge
+                        </button>
+                        <button class="translations">
+                            <i class="fas fa-language"></i> Translations
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="course-layout">
+                    <div class="course-nav-tabs">
+                        <button class="tab-btn active" data-tab="table-of-contents">Table of Contents</button>
+                        <button class="tab-btn" data-tab="course">Course</button>
+                        <button class="tab-btn" data-tab="lab-environment">Lab Environment</button>
+                        <button class="tab-btn" data-tab="purchase-labs">Purchase Additional Labs</button>
+                    </div>
+                    
+                    <div class="content-wrapper">
+                        <div id="table-of-contents" class="tab-content active">
+                            <!-- TOC content will be dynamically loaded here by toc-renderer.js -->
+                        </div>
+                        
+                        <div id="course" class="tab-content">
+                            <div class="content-area">
+                                <div class="breadcrumb">
+                                    <span>RH124</span> > 
+                                    <span>Chapter 2</span> > 
+                                    <span class="current">Accessing the Command Line</span>
+                                </div>
+                                
+                                <header class="content-header">
+                                    <h1>Accessing the Command Line</h1>
+                                    <div class="chapter-info">
+                                        <span class="chapter-number">Chapter 2</span>
+                                        <span class="estimated-time"><i class="fas fa-clock"></i> 45 minutes</span>
+                                    </div>
+                                </header>
+                                
+                                <section class="content-body">
+                                    <div class="learning-objectives">
+                                        <h3>Learning Objectives</h3>
+                                        <ul>
+                                            <li>Log in to a Linux system and run simple commands using the shell</li>
+                                            <li>Use the bash shell to execute commands</li>
+                                            <li>Identify the purpose of various shell types</li>
+                                            <li>Start an interactive shell</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="content-section">
+                                        <h2>Introduction</h2>
+                                        <p>The Linux command line is accessed through a terminal, which provides a text-based interface to the operating system. The shell is the command line interpreter that processes commands. This chapter introduces basic concepts for accessing and using the command line interface on Red Hat Enterprise Linux systems.</p>
+                                        
+                                        <div class="info-box">
+                                            <i class="fas fa-info-circle"></i>
+                                            <div class="info-content">
+                                                <strong>Note:</strong> The default shell in Red Hat Enterprise Linux is bash (Bourne Again Shell), which is compatible with the original Bourne shell but includes many additional features.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="content-section">
+                                        <h2>What is a Shell?</h2>
+                                        <p>A shell is a program that takes commands from the keyboard and gives them to the operating system to perform. On most modern Linux systems, the shell is bash. The shell provides:</p>
+                                        <ul>
+                                            <li>Command line editing capabilities</li>
+                                            <li>Command history</li>
+                                            <li>Job control</li>
+                                            <li>Programming features</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="lab-exercise">
+                                        <h3><i class="fas fa-laptop-code"></i> Guided Exercise: Accessing the Command Line</h3>
+                                        <div class="exercise-steps">
+                                            <div class="step">
+                                                <div class="step-number">1</div>
+                                                <div class="step-content">
+                                                    <p>Access your Red Hat Enterprise Linux system and open a terminal.</p>
+                                                    <div class="code-block"><code>Applications → Utilities → Terminal</code></div>
+                                                </div>
+                                            </div>
+                                            <div class="step">
+                                                <div class="step-number">2</div>
+                                                <div class="step-content">
+                                                    <p>Verify your current shell by running:</p>
+                                                    <div class="code-block"><code>echo $SHELL</code></div>
+                                                </div>
+                                            </div>
+                                            <div class="step">
+                                                <div class="step-number">3</div>
+                                                <div class="step-content">
+                                                    <p>Display the current working directory:</p>
+                                                    <div class="code-block"><code>pwd</code></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                        
+                        <div id="lab-environment" class="tab-content">
+                            <div class="content-area">
+                                <header class="content-header">
+                                    <h1>Lab Environment</h1>
+                                    <div class="chapter-info">
+                                        <span class="chapter-number">Virtual Labs</span>
+                                        <span class="estimated-time"><i class="fas fa-server"></i> Online Environment</span>
+                                    </div>
+                                </header>
+                                
+                                <div class="content-section">
+                                    <h2>Virtual Lab Environment</h2>
+                                    <p>Access hands-on Red Hat Enterprise Linux systems in our cloud-based virtual laboratory environment. No local installation required.</p>
+                                    
+                                    <div class="info-box">
+                                        <i class="fas fa-info-circle"></i>
+                                        <div class="info-content">
+                                            <strong>System Requirements:</strong> Modern web browser with JavaScript enabled. Stable internet connection recommended for optimal performance.
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="lab-features">
+                                        <h3>Lab Features</h3>
+                                        <ul>
+                                            <li>Pre-configured RHEL 9.3 systems</li>
+                                            <li>Root and student user access</li>
+                                            <li>Practice environments for each chapter</li>
+                                            <li>Reset capabilities for clean starts</li>
+                                            <li>24/7 availability during course enrollment</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="purchase-labs" class="tab-content">
+                            <div class="content-area">
+                                <header class="content-header">
+                                    <h1>Purchase Additional Labs</h1>
+                                    <div class="chapter-info">
+                                        <span class="chapter-number">Extended Access</span>
+                                        <span class="estimated-time"><i class="fas fa-shopping-cart"></i> Lab Extensions</span>
+                                    </div>
+                                </header>
+                                
+                                <div class="content-section">
+                                    <h2>Extend Your Learning</h2>
+                                    <p>Continue practicing with extended lab access beyond your course enrollment period. Perfect for exam preparation and skill reinforcement.</p>
+                                    
+                                    <div class="purchase-options">
+                                        <div class="purchase-card">
+                                            <h3>30-Day Extension</h3>
+                                            <div class="price">$49</div>
+                                            <ul>
+                                                <li>Extended lab environment access</li>
+                                                <li>All chapter exercises</li>
+                                                <li>Practice exams</li>
+                                                <li>Technical support</li>
+                                            </ul>
+                                            <button class="purchase-btn">Purchase Extension</button>
+                                        </div>
+                                        
+                                        <div class="purchase-card featured">
+                                            <h3>90-Day Extension</h3>
+                                            <div class="price">$99</div>
+                                            <div class="popular">Most Popular</div>
+                                            <ul>
+                                                <li>Extended lab environment access</li>
+                                                <li>All chapter exercises</li>
+                                                <li>Practice exams</li>
+                                                <li>Technical support</li>
+                                                <li>Additional practice scenarios</li>
+                                            </ul>
+                                            <button class="purchase-btn">Purchase Extension</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    </div>
+    
+    <footer class="redhat-footer">
+        <div class="footer-content">
+            <img src="asset/image/logo-hat.png" alt="Red Hat logo" class="footer-logo">
+            <div class="footer-links">
+                <span>© 2025 Red Hat, Inc.</span>
+                <a href="#">Privacy Statement</a>
+                <a href="#">Red Hat Training Policies</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">All policies and guidelines</a>
+                <a href="#">Cookie preferences</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Table of Contents Modules -->
+    <script src="table-of-content/toc-data.js"></script>
+    <script src="table-of-content/toc-renderer.js"></script>
+    
+    <!-- Chapter Content System -->
+    <script src="chapter/chapter-loader.js"></script>
+    
+    <!-- Main Application Scripts -->
+    <script src="script.js"></script>
+    <script src="enhancements.js"></script>
+</body>
+</html>
